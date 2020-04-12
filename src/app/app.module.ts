@@ -23,6 +23,15 @@ import { BuscarComponent } from './pages/buscar/buscar.component';
 import { DialogoComponent } from './pages/buscar/dialogo/dialogo.component';
 import { ReporteComponent } from './pages/reporte/reporte.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { LoguinComponent } from './pages/loguin/loguin.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { environment } from 'src/environments/environment';
+import { Not403Component } from './pages/not403/not403.component';
+
+export function tokenGetter() {
+  let tk = sessionStorage.getItem(environment.TOKEN_NAME);
+  return tk != null ? tk : '';
+}
 
 @NgModule({
   declarations: [
@@ -40,7 +49,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     WizardComponent,
     BuscarComponent,
     DialogoComponent,
-    ReporteComponent
+    ReporteComponent,
+    LoguinComponent,
+    Not403Component
   ],
   entryComponents: [MedicoDialogoComponent, DialogoComponent],
   imports: [
@@ -52,7 +63,14 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    PdfViewerModule
+    PdfViewerModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:8080'],
+        blacklistedRoutes: ['http://localhost:8080/login/enviarCorreo']
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
