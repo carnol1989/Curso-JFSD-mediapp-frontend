@@ -4,10 +4,11 @@
 
 export const environment = {
   production: false,
-  HOST: 'http://localhost:8080',
-  TOKEN_AUTH_USERNAME: 'mitomediapp',
-  TOKEN_AUTH_PASSWORD: 'mito89codex',
-  TOKEN_NAME: 'access_token'
+  HOST: 'http://IP_SERVER_BACKEND:PORT_SERVER_BACKEND',
+  TOKEN_AUTH_USERNAME: 'TU_CLIENT_ID',
+  TOKEN_AUTH_PASSWORD: 'TU_CLIENT_SECRET',
+  TOKEN_NAME: 'access_token',
+  REINTENTOS: 3
 };
 
 /*

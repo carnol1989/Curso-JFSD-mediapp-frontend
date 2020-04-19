@@ -1,3 +1,5 @@
+import { TokenComponent } from './pages/loguin/recuperar/token/token.component';
+import { RecuperarComponent } from './pages/loguin/recuperar/recuperar.component';
 import { Not403Component } from './pages/not403/not403.component';
 import { GuardService } from './_service/guard.service';
 import { NgModule } from '@angular/core';
@@ -43,6 +45,10 @@ const routes: Routes = [
   { path: 'buscar', component: BuscarComponent, canActivate: [GuardService] },
   { path: 'reporte', component: ReporteComponent, canActivate: [GuardService] },
   { path: 'login', component: LoguinComponent },
+  { path: 'recuperar', component: RecuperarComponent, children: [
+      { path: ':token', component: TokenComponent }
+    ]
+  },
   { path: 'not-403', component: Not403Component },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

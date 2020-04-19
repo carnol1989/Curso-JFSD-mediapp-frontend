@@ -24,13 +24,33 @@ export class LoginService {
   }
 
   cerrarSesion() {
-    sessionStorage.clear();
-    this.router.navigate(['login']);
+    let token = sessionStorage.getItem(environment.TOKEN_NAME);
+
+    this.http.get(`${environment.HOST}/tokens/anular/${token}`).subscribe(() => {
+      sessionStorage.clear();
+      this.router.navigate(['login']);
+    });
   }
 
   estaLogueado() {
     let token = sessionStorage.getItem(environment.TOKEN_NAME);
     return token != null;
+  }
+
+  enviarCorreo(correo: string) {
+    return this.http.post<number>(`${environment.HOST}/login/enviarCorreo`, correo, {
+      headers: new HttpHeaders().set('Content-Type', 'text/plain')
+    });
+  }
+
+  verificarTokenReset(token: string) {
+    return this.http.get<number>(`${environment.HOST}/login/restablecer/verificar/${token}`);
+  }
+
+  restablecer(token: string, clave: string) {
+    return this.http.post<number>(`${environment.HOST}/login/restablecer/${token}`, clave, {
+      headers: new HttpHeaders().set('Content-type', 'text/plain')
+    });
   }
 
 }

@@ -1,3 +1,4 @@
+import { ServerErrorsInterceptor } from './_shared/server-errors.interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -5,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PacienteComponent } from './pages/paciente/paciente.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MaterialModule } from './material/material.module';
 import { PacienteEdicionComponent } from './pages/paciente/paciente-edicion/paciente-edicion.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -27,6 +28,8 @@ import { LoguinComponent } from './pages/loguin/loguin.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
 import { Not403Component } from './pages/not403/not403.component';
+import { RecuperarComponent } from './pages/loguin/recuperar/recuperar.component';
+import { TokenComponent } from './pages/loguin/recuperar/token/token.component';
 
 export function tokenGetter() {
   let tk = sessionStorage.getItem(environment.TOKEN_NAME);
@@ -51,7 +54,9 @@ export function tokenGetter() {
     DialogoComponent,
     ReporteComponent,
     LoguinComponent,
-    Not403Component
+    Not403Component,
+    RecuperarComponent,
+    TokenComponent
   ],
   entryComponents: [MedicoDialogoComponent, DialogoComponent],
   imports: [
@@ -72,7 +77,13 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ServerErrorsInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
