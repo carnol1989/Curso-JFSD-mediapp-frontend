@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PacienteService } from './../../../_service/paciente.service';
 import { Paciente } from './../../../_model/paciente';
@@ -24,8 +24,8 @@ export class PacienteEdicionComponent implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       'id': new FormControl(0),
-      'nombres': new FormControl(''),
-      'apellidos': new FormControl(''),
+      'nombres': new FormControl('', [Validators.required, Validators.minLength(3)]),
+      'apellidos': new FormControl('', Validators.required),
       'dni': new FormControl(''),
       'direccion': new FormControl(''),
       'telefono': new FormControl(''),
@@ -55,7 +55,17 @@ export class PacienteEdicionComponent implements OnInit {
     }
   }
 
+  //funcion de solo lectura, f para represtar el formulario
+  get f() {
+    return this.form.controls;
+  }
+
   operar() {
+    //Te aseguras que el formulario esté válido para proseguir
+    if (this.form.invalid) {
+      return;
+    }    
+
     let paciente = new Paciente();
     paciente.idPaciente = this.form.value['id'];
     paciente.nombres = this.form.value['nombres'];

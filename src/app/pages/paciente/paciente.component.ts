@@ -10,30 +10,44 @@ import { Paciente } from './../../_model/paciente';
 })
 export class PacienteComponent implements OnInit {
 
+  cantidad: number = 0;
+
   dataSource: MatTableDataSource<Paciente>;
   displayedColumns = ["idPaciente", "nombres", "apellidos", "acciones"];
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  //CUando se trabaja con pageable no es necesario el MatPaginator con ViewChield
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private pacienteService: PacienteService, private snack: MatSnackBar) { }
 
   ngOnInit() {
+    //Variable reactiva, reacciona si realizan next en otro lado
     this.pacienteService.pacienteCambio.subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
-
+    
+    //Variable reactiva, reacciona si realizan next en otro lado
     this.pacienteService.mensajeCambio.subscribe(data => {
       this.snack.open(data, 'AVISO', {
         duration: 2000
       });
     });
 
-    this.pacienteService.listar().subscribe(data => {
+    //Listar sin paginar
+    /*this.pacienteService.listar().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+    });*/
+
+    this.pacienteService.listarPageable(0, 10).subscribe(data => {
+      //console.log(data);
+      this.cantidad = data.totalElements;
+      this.dataSource = new MatTableDataSource(data.content);
+      this.dataSource.sort = this.sort;
+      //this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -47,6 +61,17 @@ export class PacienteComponent implements OnInit {
         this.pacienteService.pacienteCambio.next(data);
         this.pacienteService.mensajeCambio.next('SE ELIMINO');
       });
+    });
+  }
+
+  mostrarMas(e: any) {
+    //console.log(e);
+    this.pacienteService.listarPageable(e.pageIndex, e.pageSize).subscribe(data => {
+      //console.log(data);
+      this.cantidad = data.totalElements;
+      this.dataSource = new MatTableDataSource(data.content);
+      this.dataSource.sort = this.sort;
+      //this.dataSource.paginator = this.paginator;//Como se trae en bloque en bloque y manual no es necesario
     });
   }
 
