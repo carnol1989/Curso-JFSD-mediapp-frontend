@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  HOST: 'http://165.227.206.251/mediapp-backend',
-  TOKEN_AUTH_USERNAME: 'mitomediapp',
-  TOKEN_AUTH_PASSWORD: 'mito89codex',
+  HOST: 'http://IP_SERVER_BACKEND:PUERTO_SERVER_BACKEND/mediapp-backend',
+  TOKEN_AUTH_USERNAME: '[TU_CLIENT_ID]',
+  TOKEN_AUTH_PASSWORD: '[TU_CLIENT_SECRET]',
   TOKEN_NAME: 'access_token',
   REINTENTOS: 3
 };
