@@ -11,7 +11,8 @@ import { ConsultaResumenDTO } from './../_dto/consultaResumenDTO';
 })
 export class ConsultaService {
 
-  url: string = `${environment.HOST}/consultas`;
+  url: string = `${environment.HOST}/consultas`;//monolito
+  //url: string = `${environment.HOST}/${environment.MICRO_CR}/consultas`;//micro
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +25,7 @@ export class ConsultaService {
   }
 
   listarExamenPorConsulta(idConsulta: number) {
+    //return this.http.get<ConsultaListaExamenDTO[]>(`${environment.HOST}/${environment.MICRO_CR}/consultaExamenes/${idConsulta}`);//micro
     return this.http.get<ConsultaListaExamenDTO[]>(`${environment.HOST}/consultaExamenes/${idConsulta}`);
   }
 

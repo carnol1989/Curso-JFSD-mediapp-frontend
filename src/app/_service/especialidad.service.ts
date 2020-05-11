@@ -12,7 +12,8 @@ export class EspecialidadService {
   especialidadCambio = new Subject<Especialidad[]>();
   mensajeCambio = new Subject<string>();
 
-  url: string = `${environment.HOST}/especialidades`;
+  url: string = `${environment.HOST}/especialidades`;//monolito
+  //url: string = `${environment.HOST}/${environment.MICRO_CRUD}/especialidades`;//micro
 
   constructor(private http: HttpClient) { }
 

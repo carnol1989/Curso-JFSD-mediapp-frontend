@@ -12,7 +12,8 @@ export class ExamenService {
   examenCambio = new Subject<Examen[]>();
   mensajeCambio = new Subject<string>();
 
-  url: string = `${environment.HOST}/examenes`;
+  url: string = `${environment.HOST}/examenes`;//monolito
+  //url: string = `${environment.HOST}/${environment.MICRO_CRUD}/examenes`;
 
   constructor(private http: HttpClient) { }
 

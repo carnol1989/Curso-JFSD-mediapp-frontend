@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 })
 export class LoginService {
 
-  url: string = `${environment.HOST}/oauth/token`;
+  url: string = `${environment.HOST}/oauth/token`;//monolito
+  //url: string = `${environment.HOST}/uaa/oauth/token`;//micro
 
   constructor(
     private http: HttpClient,
@@ -26,6 +27,7 @@ export class LoginService {
   cerrarSesion() {
     let token = sessionStorage.getItem(environment.TOKEN_NAME);
 
+    //`${environment.HOST}/uaa/tokens/anular/${token}`//micro
     this.http.get(`${environment.HOST}/tokens/anular/${token}`).subscribe(() => {
       sessionStorage.clear();
       this.router.navigate(['login']);
@@ -38,16 +40,19 @@ export class LoginService {
   }
 
   enviarCorreo(correo: string) {
+    //`${environment.HOST}/${environment.MICRO_CR}/login/enviarCorreo`//micro
     return this.http.post<number>(`${environment.HOST}/login/enviarCorreo`, correo, {
       headers: new HttpHeaders().set('Content-Type', 'text/plain')
     });
   }
 
   verificarTokenReset(token: string) {
+    //`${environment.HOST}/${environment.MICRO_CR}/login/restablecer/verificar/${token}`//micro
     return this.http.get<number>(`${environment.HOST}/login/restablecer/verificar/${token}`);
   }
 
   restablecer(token: string, clave: string) {
+    //`${environment.HOST}/${environment.MICRO_CR}/login/restablecer/${token}`//micro
     return this.http.post<number>(`${environment.HOST}/login/restablecer/${token}`, clave, {
       headers: new HttpHeaders().set('Content-type', 'text/plain')
     });

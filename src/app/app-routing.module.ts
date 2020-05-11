@@ -1,3 +1,6 @@
+import { SignosEdicionComponent } from './pages/signos/signos-edicion/signos-edicion.component';
+import { SignosComponent } from './pages/signos/signos.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 import { TokenComponent } from './pages/loguin/recuperar/token/token.component';
 import { RecuperarComponent } from './pages/loguin/recuperar/recuperar.component';
 import { Not403Component } from './pages/not403/not403.component';
@@ -42,6 +45,12 @@ const routes: Routes = [
   { path: 'consulta', component: ConsultaComponent, canActivate: [GuardService] },
   { path: 'consulta-especial', component: EspecialComponent, canActivate: [GuardService] },
   { path: 'consulta-wizard', component: WizardComponent, canActivate: [GuardService] },
+  {
+    path: 'signos', component: SignosComponent, children: [
+      { path: 'nuevo', component: SignosEdicionComponent },
+      { path: 'edicion/:id', component: SignosEdicionComponent }
+    ], canActivate: [GuardService]
+  },
   { path: 'buscar', component: BuscarComponent, canActivate: [GuardService] },
   { path: 'reporte', component: ReporteComponent, canActivate: [GuardService] },
   { path: 'login', component: LoguinComponent },
@@ -49,6 +58,7 @@ const routes: Routes = [
       { path: ':token', component: TokenComponent }
     ]
   },
+  { path: 'perfil', component: PerfilComponent/*, canActivate: [GuardService]*/ },
   { path: 'not-403', component: Not403Component },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

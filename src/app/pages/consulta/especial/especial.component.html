@@ -13,7 +13,7 @@
     </mat-autocomplete>
 
     <mat-form-field>
-        <mat-select placeholder="Especialidad" [(value)]="especialidadSeleccionada" formControlName="especialidad">
+        <mat-select placeholder="Especialidad" [(value)]="especialidadSeleccionado" formControlName="especialidad">
             <mat-option *ngFor="let e of especialidades" [value]="e">
                 {{ e.nombre }}
             </mat-option>

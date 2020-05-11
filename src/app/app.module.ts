@@ -30,6 +30,11 @@ import { environment } from 'src/environments/environment';
 import { Not403Component } from './pages/not403/not403.component';
 import { RecuperarComponent } from './pages/loguin/recuperar/recuperar.component';
 import { TokenComponent } from './pages/loguin/recuperar/token/token.component';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import { SignosComponent } from './pages/signos/signos.component';
+import { SignosEdicionComponent } from './pages/signos/signos-edicion/signos-edicion.component';
+import { PacienteDialogoComponent } from './pages/paciente/paciente-dialogo/paciente-dialogo.component';
 
 export function tokenGetter() {
   let tk = sessionStorage.getItem(environment.TOKEN_NAME);
@@ -56,9 +61,13 @@ export function tokenGetter() {
     LoguinComponent,
     Not403Component,
     RecuperarComponent,
-    TokenComponent
+    TokenComponent,
+    PerfilComponent,
+    SignosComponent,
+    SignosEdicionComponent,
+    PacienteDialogoComponent
   ],
-  entryComponents: [MedicoDialogoComponent, DialogoComponent],
+  entryComponents: [MedicoDialogoComponent, DialogoComponent, PacienteDialogoComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -72,8 +81,8 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:8080'],
-        blacklistedRoutes: ['http://localhost:8080/login/enviarCorreo']
+        whitelistedDomains: ['IP_SERVER_BACKEND:PUERTO_SERVER_BACKEND'],
+        blacklistedRoutes: ['http://IP_SERVER_BACKEND:PUERTO_SERVER_BACKEND/login/enviarCorreo']
       }
     })
   ],
@@ -82,7 +91,8 @@ export function tokenGetter() {
       provide: HTTP_INTERCEPTORS,
       useClass: ServerErrorsInterceptor,
       multi: true
-    }
+    }, 
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })

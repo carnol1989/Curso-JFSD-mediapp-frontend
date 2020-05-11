@@ -12,7 +12,8 @@ export class MedicoService {
   medicoCambio = new Subject<Medico[]>();
   mensajeCambio = new Subject<string>();
 
-  url: string = `${environment.HOST}/medicos`;
+  url: string = `${environment.HOST}/medicos`;//monolito
+  //url: string = `${environment.HOST}/${environment.MICRO_CRUD}/medicos`;//micro
 
   constructor(private http: HttpClient) { }
 

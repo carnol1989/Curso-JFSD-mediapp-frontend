@@ -1,0 +1,55 @@
+<form class="example-container" [formGroup]="form" #espForm="ngForm">
+    <div [hidden]="true">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="ID" required formControlName="id">
+        </mat-form-field>
+    </div>
+
+    <mat-grid-list cols="2" rowHeight="100px">
+        <mat-grid-tile>
+            <mat-form-field>
+                <input type="text" placeholder="Paciente" matInput [matAutocomplete]="autoPaciente"
+                    [formControl]="myControlPaciente" formControlName="paciente">
+            </mat-form-field>
+            <mat-autocomplete #autoPaciente="matAutocomplete" [displayWith]="mostrarPaciente"
+                (optionSelected)="seleccionarPaciente($event)">
+                <mat-option *ngFor="let p of pacientesFiltrados | async" [value]="p">
+                    {{ p.nombres }} {{ p.apellidos }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <button mat-raised-button color="accent" (click)="abrirDialogo()">
+                Nuevo Paciente
+            </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Escoge una fecha" 
+            formControlName="fecha" (dateChange)="changeEvent($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Ingrese temperatura" required formControlName="temperatura">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Ingrese pulso" required formControlName="pulso">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Ingrese ritmo respiratorio" required formControlName="ritmoRespiratorio">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" (click)="operar()" [disabled]="espForm.invalid">
+        <mat-icon>done</mat-icon>
+        <span>Aceptar</span>
+    </button>
+    <button mat-raised-button color="accent" type="button" routerLink='/signos'>
+        <mat-icon>close</mat-icon>
+        <span>Cancelar</span>
+    </button>
+</form>

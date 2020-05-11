@@ -1,0 +1,11 @@
+<br/>
+<div style="padding-left: 15px;">
+    <mat-toolbar> Hola, {{ nombre_usuario }}</mat-toolbar>
+    <mat-list>
+        <div mat-subheader>Rol</div>
+        <mat-list-item *ngFor="let rol of roles">
+        <mat-icon mat-list-icon>account_box</mat-icon>
+        <div mat-line>{{ rol }}</div>
+        </mat-list-item>    
+    </mat-list>
+</div>

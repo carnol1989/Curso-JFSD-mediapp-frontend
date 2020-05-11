@@ -11,7 +11,8 @@ export class MenuService {
 
   menuCambio = new Subject<Menu[]>();
 
-  url: string = `${environment.HOST}/menus`;
+  url: string = `${environment.HOST}/menus`;//monolito
+  //url: string = `${environment.HOST}/${environment.MICRO_CR}/menus`;//micro
 
   constructor(
     private http: HttpClient
